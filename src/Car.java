@@ -1,11 +1,17 @@
 public class Car {
     double speed = 0;
     double fuel = 0;
+    FuelType fuelType = null;
 
-    double litresPerKmH = 0.01;
+    Car(FuelType f) {
+        fuelType = f;
+    }
 
-    void refuel(double amount) {
-        fuel = fuel + amount;
+    void refuel(FuelTank tank) {
+        if(this.fuelType.type.equals(tank.type.type)) {
+            fuel = fuel + tank.amount;
+            tank.amount = 0;
+        }
     }
 
     void brake(double amount) {
@@ -15,24 +21,29 @@ public class Car {
     }
 
     void accelerate(double amount) {
-        double fuelConsumed = amount*litresPerKmH;
+        double fuelConsumed = amount*fuelType.litresPerKmH;
         if(fuelConsumed < fuel) {
             speed = speed + amount;
             fuel = fuel - fuelConsumed;
         }
         else {
-            double increaseSpeed = fuel / litresPerKmH;
+            double increaseSpeed = fuel / fuelType.litresPerKmH;
             speed = speed + increaseSpeed;
             fuel = 0;
         }
     }
 
     public static void main(String[] args) {
-        Car myCar = new Car();
-        myCar.refuel(2);
+        FuelType diesel = new FuelType("diesel", 1.4);
+        FuelType petrol = new FuelType("petrol", 1.4, 0.005);
+
+        Car myCar = new Car(new FuelType("diesel", 1.4, 0.01));
+        FuelTank two_lt = new FuelTank(diesel, 2);
+        FuelTank three_lt = new FuelTank(diesel, 3);
+        myCar.refuel(two_lt);
         myCar.accelerate(100);
-        Car yourCar = new Car();
-        yourCar.refuel(3);
+        Car yourCar = new Car(diesel);
+        yourCar.refuel(three_lt);
         yourCar = myCar;
         myCar.brake(30);
         myCar.accelerate(50);
