@@ -1,3 +1,5 @@
+package it.unive.dais.po1.autovehicles.fuel;
+
 public class FuelTank {
     FuelType type;
     double amount;

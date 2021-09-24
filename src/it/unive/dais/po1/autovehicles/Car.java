@@ -1,3 +1,6 @@
+package it.unive.dais.po1.autovehicles;
+import it.unive.dais.po1.autovehicles.fuel.*;
+
 public class Car {
     double speed = 0;
     double fuel = 0;
@@ -8,15 +11,19 @@ public class Car {
     }
 
     void refuel(FuelTank tank) {
-        if(this.fuelType.type.equals(tank.type.type)) {
+        if(tank.type.isCompatible(this)) {
             fuel = fuel + tank.amount;
             tank.amount = 0;
         }
     }
 
+    void fullBrake() {
+        this.speed=0;
+    }
+
     void brake(double amount) {
         if(amount > speed)
-            speed = 0;
+            this.fullBrake();
         else speed = speed - amount;
     }
 
@@ -40,8 +47,10 @@ public class Car {
         Car myCar = new Car(new FuelType("diesel", 1.4, 0.01));
         FuelTank two_lt = new FuelTank(diesel, 2);
         FuelTank three_lt = new FuelTank(diesel, 3);
+        diesel.costPerLiter = 1.35;
         myCar.refuel(two_lt);
-        myCar.accelerate(100);
+        double increase = 100;
+        myCar.accelerate(increase);
         Car yourCar = new Car(diesel);
         yourCar.refuel(three_lt);
         yourCar = myCar;
