@@ -2,39 +2,43 @@ package it.unive.dais.po1.autovehicles;
 import it.unive.dais.po1.autovehicles.fuel.*;
 
 public class Car {
-    double speed = 0;
-    double fuel = 0;
-    FuelType fuelType = null;
+    private double speed = 0;
+    private double fuel = 0;
+    private final FuelType fuelType;
 
-    Car(FuelType f) {
+    public Car(FuelType f) {
         fuelType = f;
     }
 
-    void refuel(FuelTank tank) {
-        if(tank.type.isCompatible(this)) {
-            fuel = fuel + tank.amount;
-            tank.amount = 0;
+    public void refuel(FuelTank tank) {
+        if(this.fuelType.isCompatible(tank)) {
+            fuel = fuel + tank.getAmount();
+            tank.emptyTank();
         }
     }
 
-    void fullBrake() {
+    public void fullBrake() {
         this.speed=0;
     }
 
-    void brake(double amount) {
+    public void brake(double amount) {
         if(amount > speed)
             this.fullBrake();
         else speed = speed - amount;
     }
 
-    void accelerate(double amount) {
-        double fuelConsumed = amount*fuelType.litresPerKmH;
+    private double computeConsumedFuel(double speedIncrease, double litresPerKmH) {
+        return speedIncrease*litresPerKmH;
+    }
+
+    public void accelerate(double amount) {
+        double fuelConsumed = computeConsumedFuel(amount, fuelType.getLitresPerKmH());
         if(fuelConsumed < fuel) {
             speed = speed + amount;
             fuel = fuel - fuelConsumed;
         }
         else {
-            double increaseSpeed = fuel / fuelType.litresPerKmH;
+            double increaseSpeed = fuel / fuelType.getLitresPerKmH();
             speed = speed + increaseSpeed;
             fuel = 0;
         }
@@ -47,7 +51,7 @@ public class Car {
         Car myCar = new Car(new FuelType("diesel", 1.4, 0.01));
         FuelTank two_lt = new FuelTank(diesel, 2);
         FuelTank three_lt = new FuelTank(diesel, 3);
-        diesel.costPerLiter = 1.35;
+        diesel.setCostPerLiter(1.35);
         myCar.refuel(two_lt);
         double increase = 100;
         myCar.accelerate(increase);

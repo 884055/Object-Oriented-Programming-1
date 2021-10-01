@@ -1,10 +1,22 @@
 package it.unive.dais.po1.autovehicles.fuel;
 
 public class FuelTank {
-    FuelType type;
-    double amount;
-    int id;
+    private FuelType type;
+    private double amount;
+    private int id;
     static int counter = 0;
+
+    public FuelType getFuelType() {
+        return this.type;
+    }
+
+    public double getAmount() {
+        return this.amount;
+    }
+
+    public void emptyTank() {
+        this.amount = 0;
+    }
 
     public FuelTank(FuelType type, double amount) {
         this.type = type;
