@@ -1,5 +1,10 @@
 package it.unive.dais.po1.autovehicles.fuel;
-
+/**
+ * This class represents a fuel tank
+ *
+ * @since 1.0
+ * @author Pietro Ferrara
+ */
 public class FuelTank {
     private FuelType type;
     private double amount;
