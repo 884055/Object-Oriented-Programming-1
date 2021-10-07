@@ -25,6 +25,11 @@ public class FuelType {
      *
      * @param costPerLiter the new cost per liter of the current fuel type
      * @return true if and only if the cost per liter of the fuel is set to the given price after the execution of this method
+     *
+     * @requires NIENTE
+     * @ensures costPerLiter < 0 => getCostPerLiter() = 0
+     * @ensures costPerLiter >= 0 => Math.abs(this.costPerLiter-costPerLiter)/getCostPerLiter() < 0.20 => getCostPerLiter() = costPerLiter
+     * @ensures costPerLiter >= 0 => Math.abs(this.costPerLiter-costPerLiter)/getCostPerLiter() >= 0.20 => ...
      */
     public boolean setCostPerLiter(double costPerLiter) {
         if(costPerLiter < 0) {

@@ -8,7 +8,15 @@ import it.unive.dais.po1.autovehicles.fuel.*;
  * @author Pietro Ferrara
  */
 public class Car {
+
+    /*
+    @invariant speed >= 0
+     */
     private double speed = 0;
+
+    /*
+    @invariant fuel >= 0
+     */
     private double fuel = 0;
     private final FuelType fuelType;
 
@@ -25,16 +33,29 @@ public class Car {
      * Refuel the car with the fuel in the given tank.
      *
      * @param tank a fuel tank containing some fuel
+     *
+     * @requires this.fuelType.isCompatible(tank)
      */
     public void refuel(FuelTank tank) {
-        if(this.fuelType.isCompatible(tank)) {
             fuel = fuel + tank.getAmount();
             tank.emptyTank();
-        }
+    }
+
+    /**
+     *
+     * @return the speed of the car
+     *
+     * @ensures return >= 0
+     */
+    public double getSpeed() {
+        return speed;
     }
 
     /**
      * Stops the car
+     *
+     * @requires NIENTE
+     * @ensures getSpeed() = 0
      */
     public void fullBrake() {
         this.speed=0;
@@ -44,6 +65,9 @@ public class Car {
      * Lower the speed of the car of the given amount
      *
      * @param amount km/h to speed down car
+     *
+     * @requires amount >= 0
+     * @ensures getSpeed() >= 0
      */
     public void brake(double amount) {
         if(amount > speed)
@@ -56,9 +80,14 @@ public class Car {
     }
 
     /**
-     * Accelerate the car of the given amount of km/h
+     * Accelerate the car of the given amount of km/h. If there is not enough fuel, it accelerates
+     * as much as possible.
      *
-     * @param amount a speed in km/h
+     * @param amount speed in km/h. Must be greater or equal than zero.
+     *
+     * @requires amount >= 0
+     * @ensures computeConsumedFuel(amount, fuelType.getLitresPerKmH()) < fuel => speed = pre(speed) + amount
+     * @ensures computeConsumedFuel(amount, fuelType.getLitresPerKmH()) >= fuel => speed = pre(speed) + fuel / fuelType.getLitresPerKmH()
      */
     public void accelerate(double amount) {
         double fuelConsumed = computeConsumedFuel(amount, fuelType.getLitresPerKmH());
