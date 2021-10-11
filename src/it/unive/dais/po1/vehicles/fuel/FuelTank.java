@@ -1,4 +1,4 @@
-package it.unive.dais.po1.autovehicles.fuel;
+package it.unive.dais.po1.vehicles.fuel;
 /**
  * This class represents a fuel tank
  *

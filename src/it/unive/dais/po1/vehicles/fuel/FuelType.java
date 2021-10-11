@@ -1,6 +1,5 @@
-package it.unive.dais.po1.autovehicles.fuel;
+package it.unive.dais.po1.vehicles.fuel;
 
-import it.unive.dais.po1.autovehicles.Car;
 /**
  * This class represents a fuel type
  *
@@ -9,6 +8,11 @@ import it.unive.dais.po1.autovehicles.Car;
  */
 public class FuelType {
     private final String type;
+
+    public double getFuelCost() {
+        return costPerLiter;
+    }
+
     private double costPerLiter;
     private final double litresPerKmH;
 

@@ -1,16 +1,24 @@
 package it.unive.dais.po1.vehicles;
 
 
-public class Bicycle {
+public class Bicycle extends Vehicle {
+    private final double frontTire, rearTire;
 
-    private double speed = 0;
-
-    public void accelerate(double a) {
-        if(a>0)
-            this.speed += a;
+    public Bicycle(int initialSpeed, int frontTire, int rearTire) {
+        super(initialSpeed);
+        this.frontTire = frontTire;
+        this.rearTire = rearTire;
     }
 
-    public void fullBreak() {
-        this.speed = 0;
+    public Bicycle(int initialSpeed) {
+        this(initialSpeed, 0, 0);
+    }
+
+
+    public double frontTirePressure() {
+        return frontTire;
+    }
+    public double rearTirePressure() {
+        return rearTire;
     }
 }
