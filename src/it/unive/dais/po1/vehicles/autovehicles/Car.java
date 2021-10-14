@@ -1,5 +1,6 @@
-package it.unive.dais.po1.vehicles;
-import it.unive.dais.po1.vehicles.fuel.*;
+package it.unive.dais.po1.vehicles.autovehicles;
+import it.unive.dais.po1.vehicles.Vehicle;
+import it.unive.dais.po1.vehicles.autovehicles.fuel.*;
 
 /**
  * This class represents a car
@@ -45,11 +46,21 @@ public class Car extends Vehicle {
             tank.emptyTank();
     }
 
+    public void refuel(double amount) {
+        fuel += amount;
+    }
+
+
 
 
     private double computeConsumedFuel(double speedIncrease, double litresPerKmH) {
         return speedIncrease*litresPerKmH;
     }
+
+    public double getFuelCost() {
+        return this.fuelType.getFuelCost();
+    }
+
 
     /**
      * Accelerate the car of the given amount of km/h. If there is not enough fuel, it accelerates
@@ -59,22 +70,16 @@ public class Car extends Vehicle {
      * @ensures computeConsumedFuel(amount, fuelType.getLitresPerKmH()) < fuel => speed = pre(speed) + amount
      * @ensures computeConsumedFuel(amount, fuelType.getLitresPerKmH()) >= fuel => speed = pre(speed) + fuel / fuelType.getLitresPerKmH()
      */
-    /*public void accelerate(double amount) {
+    public void accelerate(double amount)  {
         double fuelConsumed = computeConsumedFuel(amount, fuelType.getLitresPerKmH());
         if(fuelConsumed < fuel) {
-            speed = speed + amount;
+            super.accelerate(amount);
             fuel = fuel - fuelConsumed;
         }
         else {
             double increaseSpeed = fuel / fuelType.getLitresPerKmH();
-            speed = speed + increaseSpeed;
+            super.accelerate(increaseSpeed);
             fuel = 0;
         }
-    }*/
-
-    public double getFuelCost() {
-        return this.fuelType.getFuelCost();
     }
-
-
 }

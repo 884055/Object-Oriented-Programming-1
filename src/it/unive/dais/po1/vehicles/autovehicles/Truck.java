@@ -1,9 +1,9 @@
-package it.unive.dais.po1.vehicles;
+package it.unive.dais.po1.vehicles.autovehicles;
 
-import it.unive.dais.po1.vehicles.fuel.FuelTank;
-import it.unive.dais.po1.vehicles.fuel.FuelType;
+import it.unive.dais.po1.vehicles.autovehicles.Car;
+import it.unive.dais.po1.vehicles.autovehicles.fuel.FuelType;
 
-class Truck extends Car {
+public class Truck extends Car {
     private double loadedCharge;
 
     public Truck(double initialSpeed, FuelType f) {
@@ -14,6 +14,7 @@ class Truck extends Car {
         this(initialSpeed, f);
         this.loadedCharge = loadedCharge;
     }
+
 
     public void chargeLoad(double l) {
         if(l>0.0)

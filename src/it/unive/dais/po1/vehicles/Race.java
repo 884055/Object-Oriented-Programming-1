@@ -1,7 +1,9 @@
 package it.unive.dais.po1.vehicles;
 
-import it.unive.dais.po1.vehicles.fuel.FuelTank;
-import it.unive.dais.po1.vehicles.fuel.FuelType;
+import it.unive.dais.po1.vehicles.autovehicles.Car;
+import it.unive.dais.po1.vehicles.autovehicles.Truck;
+import it.unive.dais.po1.vehicles.autovehicles.fuel.FuelTank;
+import it.unive.dais.po1.vehicles.autovehicles.fuel.FuelType;
 
 public class Race {
 
@@ -28,9 +30,15 @@ public class Race {
 
         myCar.isFuelEmpty();
         FuelTank two_lt = new FuelTank(diesel, 2);
+        myTruck.refuel(two_lt);
+        myTruck.chargeLoad(100);
+        myTruck.accelerate(20);
+
         FuelTank three_lt = new FuelTank(diesel, 3);
         diesel.setCostPerLiter(1.35);
         myCar.refuel(two_lt);
+        myCar.refuel(2);
+
 
         double increase = 100;
         myCar.accelerate(increase);

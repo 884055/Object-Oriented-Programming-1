@@ -1,6 +1,8 @@
 package it.unive.dais.po1.vehicles;
 
-public class Vehicle {
+public abstract class Vehicle {
+
+    //@invariant speed >= 0
     private double speed;
 
     public Vehicle(double initialSpeed) {
@@ -15,10 +17,9 @@ public class Vehicle {
      * @requires amount >= 0
      */
     public void accelerate(double a) {
-        if(a>0)
+        if(a > 0)
             this.speed += a;
     }
-
     /**
      * Stops the vehicle
      *
@@ -51,7 +52,7 @@ public class Vehicle {
      *
      * @ensures return >= 0
      */
-    public double getSpeed() {
+    final public double getSpeed() {
         return speed;
     }
 }

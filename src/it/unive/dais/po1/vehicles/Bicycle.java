@@ -15,10 +15,13 @@ public class Bicycle extends Vehicle {
     }
 
 
-    public double frontTirePressure() {
+    final public double frontTirePressure() {
         return frontTire;
     }
-    public double rearTirePressure() {
+    final public double rearTirePressure() {
         return rearTire;
     }
+
+
+
 }
