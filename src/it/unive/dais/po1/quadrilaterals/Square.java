@@ -3,12 +3,20 @@ package it.unive.dais.po1.quadrilaterals;
 public class Square extends Rectangle {
 
     public Square(int edge) {
-        this.width = edge;
-        this.height = edge;
+        super(edge, edge);
+    }
+
+    public double getEdge() {
+        return super.getEdge1();
     }
 
     public static void main(String[] args) {
-        Square square = new Square(10);
-        int area = square.getArea();
+        Rectangle r = new Rectangle(5, 10);
+        Square s = new Square(10);
+        r.getPerimeter();
+        s.getPerimeter();
+        r.getArea();
+        s.getArea();
     }
+
 }
