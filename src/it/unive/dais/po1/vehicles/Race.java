@@ -1,5 +1,6 @@
 package it.unive.dais.po1.vehicles;
 
+import it.unive.dais.po1.vehicles.animals.AnimalCart;
 import it.unive.dais.po1.vehicles.autovehicles.Car;
 import it.unive.dais.po1.vehicles.autovehicles.Truck;
 import it.unive.dais.po1.vehicles.autovehicles.fuel.FuelTank;
@@ -17,6 +18,19 @@ public class Race {
     public static int race(Vehicle v1,  Vehicle v2, double length) {
         v1.fullBrake();
         v2.fullBrake();
+        if(v1 instanceof Car) {
+            Car c1 = (Car) v1;
+            c1.refuel(10);
+        }
+        if(v2 instanceof Car) {
+            Car c2 = (Car) v2;
+            c2.refuel(10);
+        }
+        if(v1 instanceof Loadable)
+            ((Loadable) v1).unload();
+        if(v2 instanceof Loadable)
+            ((Loadable) v2).unload();
+
         double distancev1 = 0, distancev2 = 0;
         while(distancev1 < length && distancev2 < length) {
             v1.accelerate(Math.random()*10.0);
@@ -35,17 +49,21 @@ public class Race {
     public static void main(String[] args) {
 
         FuelType diesel = new FuelType("diesel", 1.4);
-        Car myCar = new Car(0, new FuelType("diesel", 1.4, 0.01));
         Car yourCar = new Car(0, new FuelType("petrol", 1.5, 0.015));
         Bicycle myBicycle = new Bicycle(10);
         Truck myTruck = new Truck(0, diesel);
+        AnimalCart myCart = new AnimalCart(0, 0);
+
+        race(myCart, myBicycle, 100);
+
+
+
+
+
 
         FuelTank two_lt = new FuelTank(diesel, 2);
-        myCar.refuel(two_lt);
         FuelTank three_lt = new FuelTank(diesel, 3);
         myTruck.refuel(three_lt);
-
-
-        race(myBicycle, myTruck, 100);
+        race(myTruck, myBicycle, 100);
     }
 }
