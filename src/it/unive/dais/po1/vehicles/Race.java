@@ -17,6 +17,7 @@ public class Race {
      * @return the id of the winner of the race, or -1
      */
     public static int race(Vehicle v1,  Vehicle v2, double length) {
+        System.out.println("Race between two vehicles!");
         v1.fullBrake();
         v2.fullBrake();
         if(v1 instanceof Car) {
@@ -50,10 +51,21 @@ public class Race {
         else return 2;
     }
 
+    public static int race(Car v1,  Car v2, double length) {
+        System.out.println("Race between cars!");
+        return -1;
+    }
+
+    public static int race(Car v1,  Vehicle v2, double length) {
+        System.out.println("Race between a car and a vehicle!");
+        return -1;
+    }
+
     public static void main(String[] args) {
 
         FuelType diesel = new FuelType("diesel", 1.4);
         Car yourCar = new Car(0, new FuelType("petrol", 1.5, 0.015));
+        Car myCar = new Car(0, new FuelType("petrol", 1.5, 0.015));
         Bicycle myBicycle = new Bicycle(10);
         Truck myTruck = new Truck(0, diesel);
         AnimalCart myCart = new AnimalCart(0, 0);
@@ -63,6 +75,8 @@ public class Race {
         FuelTank two_lt = new FuelTank(diesel, 2);
         FuelTank three_lt = new FuelTank(diesel, 3);
         myTruck.refuel(three_lt);
-        race(yourCar, myBicycle, 100);
+        Vehicle v1 = myCar;
+        Vehicle v2 = yourCar;
+        race(v1, v2, 100);
     }
 }
