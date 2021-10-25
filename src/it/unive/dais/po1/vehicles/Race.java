@@ -27,10 +27,10 @@ public class Race {
             Car c2 = (Car) v2;
             c2.refuel(10);
         }
-        if(v1 instanceof Loadable)
-            ((Loadable) v1).unload();
-        if(v2 instanceof Loadable)
-            ((Loadable) v2).unload();
+        if(v1 instanceof LoadableUnloadable)
+            ((LoadableUnloadable) v1).unload();
+        if(v2 instanceof LoadableUnloadable)
+            ((LoadableUnloadable) v2).unload();
         if(v1 instanceof Printable)
             ((Printable) v1).print();
         if(v2 instanceof Printable)

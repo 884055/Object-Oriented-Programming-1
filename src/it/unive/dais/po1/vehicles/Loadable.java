@@ -9,9 +9,4 @@ public interface Loadable {
         if(amount>0.0)
             this.setLoad(this.getLoad()+ amount);
     }
-    default public double unload() {
-        double value = this.getLoad();
-        this.setLoad(0.0);
-        return value;
-    }
 }

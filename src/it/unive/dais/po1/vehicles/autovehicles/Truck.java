@@ -1,12 +1,11 @@
 package it.unive.dais.po1.vehicles.autovehicles;
 
-import it.unive.dais.po1.vehicles.Loadable;
-import it.unive.dais.po1.vehicles.autovehicles.Car;
+import it.unive.dais.po1.vehicles.LoadableUnloadable;
 import it.unive.dais.po1.vehicles.autovehicles.fuel.FuelType;
 
 import it.unive.dais.po1.Printable;
 
-public class Truck extends Car implements Loadable, Printable {
+public class Truck extends Car implements LoadableUnloadable, Printable {
     private double loadedCharge;
 
     public Truck(double initialSpeed, FuelType f) {
