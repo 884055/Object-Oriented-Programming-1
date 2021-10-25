@@ -1,5 +1,6 @@
 package it.unive.dais.po1.vehicles;
 
+import it.unive.dais.po1.Printable;
 import it.unive.dais.po1.vehicles.animals.AnimalCart;
 import it.unive.dais.po1.vehicles.autovehicles.Car;
 import it.unive.dais.po1.vehicles.autovehicles.Truck;
@@ -30,7 +31,10 @@ public class Race {
             ((Loadable) v1).unload();
         if(v2 instanceof Loadable)
             ((Loadable) v2).unload();
-
+        if(v1 instanceof Printable)
+            ((Printable) v1).print();
+        if(v2 instanceof Printable)
+            ((Printable) v2).print();
         double distancev1 = 0, distancev2 = 0;
         while(distancev1 < length && distancev2 < length) {
             v1.accelerate(Math.random()*10.0);
@@ -56,14 +60,9 @@ public class Race {
 
         race(myCart, myBicycle, 100);
 
-
-
-
-
-
         FuelTank two_lt = new FuelTank(diesel, 2);
         FuelTank three_lt = new FuelTank(diesel, 3);
         myTruck.refuel(three_lt);
-        race(myTruck, myBicycle, 100);
+        race(yourCar, myBicycle, 100);
     }
 }

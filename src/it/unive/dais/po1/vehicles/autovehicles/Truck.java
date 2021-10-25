@@ -4,7 +4,9 @@ import it.unive.dais.po1.vehicles.Loadable;
 import it.unive.dais.po1.vehicles.autovehicles.Car;
 import it.unive.dais.po1.vehicles.autovehicles.fuel.FuelType;
 
-public class Truck extends Car implements Loadable {
+import it.unive.dais.po1.Printable;
+
+public class Truck extends Car implements Loadable, Printable {
     private double loadedCharge;
 
     public Truck(double initialSpeed, FuelType f) {
@@ -16,6 +18,12 @@ public class Truck extends Car implements Loadable {
         this.loadedCharge = loadedCharge;
     }
 
+    public double getLoad() {
+        return loadedCharge;
+    }
+    public void setLoad(double l) {
+        this.loadedCharge=l;
+    }
 
     public void chargeLoad(double l) {
         if(l>0.0)
@@ -27,5 +35,9 @@ public class Truck extends Car implements Loadable {
         double value = this.loadedCharge;
         this.loadedCharge = 0.0;
         return value;
+    }
+
+    public void print() {
+        System.out.print("I am a truck with "+loadedCharge+" kgs of goods");
     }
 }

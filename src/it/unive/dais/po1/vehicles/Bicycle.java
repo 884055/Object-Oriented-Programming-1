@@ -1,7 +1,9 @@
 package it.unive.dais.po1.vehicles;
 
 
-public class Bicycle extends Vehicle {
+import it.unive.dais.po1.Printable;
+
+public class Bicycle extends Vehicle implements Printable {
     private final double frontTire, rearTire;
 
     public Bicycle(int initialSpeed, int frontTire, int rearTire) {
@@ -23,5 +25,7 @@ public class Bicycle extends Vehicle {
     }
 
 
-
+    public void print() {
+        System.out.println("I'm a slow bicycle");
+    }
 }

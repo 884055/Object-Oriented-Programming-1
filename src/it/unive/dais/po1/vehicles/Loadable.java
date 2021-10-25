@@ -1,6 +1,7 @@
 package it.unive.dais.po1.vehicles;
 
 public interface Loadable {
+
     double getLoad();
     void setLoad(double l);
 
