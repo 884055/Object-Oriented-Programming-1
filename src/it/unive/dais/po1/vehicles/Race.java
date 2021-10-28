@@ -51,13 +51,20 @@ public class Race {
         else return 2;
     }
 
+    public static int race(Car v1,  Vehicle v2, double length) {
+        System.out.println("Race between a car and a vehicle!");
+        return -1;
+    }
+
+
+
     public static int race(Car v1,  Car v2, double length) {
         System.out.println("Race between cars!");
         return -1;
     }
 
-    public static int race(Car v1,  Vehicle v2, double length) {
-        System.out.println("Race between a car and a vehicle!");
+    public static int race(Vehicle v1,  Truck v2, double length) {
+        System.out.println("Race between a vehicle and a truck!");
         return -1;
     }
 
@@ -70,13 +77,17 @@ public class Race {
         Truck myTruck = new Truck(0, diesel);
         AnimalCart myCart = new AnimalCart(0, 0);
 
-        race(myCart, myBicycle, 100);
 
         FuelTank two_lt = new FuelTank(diesel, 2);
         FuelTank three_lt = new FuelTank(diesel, 3);
         myTruck.refuel(three_lt);
         Vehicle v1 = myCar;
         Vehicle v2 = yourCar;
-        race(v1, v2, 100);
+
+        Race recobj = new Race();
+        ExtendedRace extended_recobj = new ExtendedRace();
+        Race fake_raceobj = extended_recobj;
+
+        fake_raceobj.race(v1, v2, 100.0);
     }
 }
