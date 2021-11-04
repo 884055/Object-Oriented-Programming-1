@@ -3,11 +3,36 @@ package it.unive.dais.po1.vehicles;
 import it.unive.dais.po1.Printable;
 import it.unive.dais.po1.vehicles.animals.AnimalCart;
 import it.unive.dais.po1.vehicles.autovehicles.Car;
+import it.unive.dais.po1.vehicles.autovehicles.FuelTypeCache;
 import it.unive.dais.po1.vehicles.autovehicles.Truck;
 import it.unive.dais.po1.vehicles.autovehicles.fuel.FuelTank;
 import it.unive.dais.po1.vehicles.autovehicles.fuel.FuelType;
 
-public class Race {
+public class Race<T extends Vehicle> {
+
+    private final T v1, v2;
+
+    public Race(T v1, T v2) {
+        this.v1 = v1;
+        this.v2 = v2;
+    }
+
+    public T race(double length) {
+        v1.fullBrake();
+        v2.fullBrake();
+        double distanceV1 = 0, distanceV2=0;
+        while(true) {
+            distanceV1 += v1.getSpeed();
+            distanceV2 += v2.getSpeed();
+            if(distanceV1 >= length || distanceV2 >= length) {
+                if(distanceV1 > distanceV2) return v1;
+                else return v2;
+            }
+            v1.accelerate(Math.random()*10.0);
+            v2.accelerate(Math.random()*10.0);
+        }
+    }
+
 
     /**
      *
@@ -68,11 +93,31 @@ public class Race {
         return -1;
     }
 
-    public static void main(String[] args) {
 
-        FuelType diesel = new FuelType("diesel", 1.4);
-        Car yourCar = new Car(0, new FuelType("petrol", 1.5, 0.015));
-        Car myCar = new Car(0, new FuelType("petrol", 1.5, 0.015));
+    public static <T extends Vehicle> T new_race(T v1, T v2, double length) {
+        v1.fullBrake();
+        v2.fullBrake();
+        double distanceV1 = 0, distanceV2=0;
+        while(true) {
+            distanceV1 += v1.getSpeed();
+            distanceV2 += v2.getSpeed();
+            if(distanceV1 >= length || distanceV2 >= length) {
+                if(distanceV1 > distanceV2) return v1;
+                else return v2;
+            }
+            v1.accelerate(Math.random()*10.0);
+            v2.accelerate(Math.random()*10.0);
+        }
+    }
+
+
+    public static void main(String[] args) {
+        FuelTypeCache cache = new FuelTypeCache();
+
+        FuelType diesel = cache.put("diesel", 1.4, 0.01);
+        FuelType petrol = cache.put("petrol", 1.5, 0.015);
+        Car yourCar = new Car(0, cache.getFuelTypeFromName("petrol"));
+        Car myCar = new Car(0, cache.getFuelTypeFromName("petrol"));
         Bicycle myBicycle = new Bicycle(10);
         Truck myTruck = new Truck(0, diesel);
         AnimalCart myCart = new AnimalCart(0, 0);
@@ -84,10 +129,15 @@ public class Race {
         Vehicle v1 = myCar;
         Vehicle v2 = yourCar;
 
-        Race recobj = new Race();
-        ExtendedRace extended_recobj = new ExtendedRace();
+        Race recobj = new Race(v1, v2);
+        ExtendedRace extended_recobj = new ExtendedRace(v1, v2);
         Race fake_raceobj = extended_recobj;
 
+        Car winner = Race.new_race(myCar, yourCar, 100);
+        Truck winner2 = Race.new_race(myTruck, myTruck, 100);
+
         fake_raceobj.race(v1, v2, 100.0);
+
+        Car b = new Race<>(myCar, yourCar).race(100);
     }
 }
