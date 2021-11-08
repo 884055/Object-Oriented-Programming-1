@@ -1,5 +1,7 @@
 package it.unive.dais.po1.vehicles.autovehicles.fuel;
 
+import java.util.Objects;
+
 /**
  * This class represents a fuel type
  *
@@ -15,6 +17,24 @@ public class FuelType {
 
     private double costPerLiter;
     private final double litresPerKmH;
+
+    @Override
+    public FuelType clone() {
+        return new FuelType(type, costPerLiter, litresPerKmH);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FuelType fuelType = (FuelType) o;
+        return Double.compare(fuelType.costPerLiter, costPerLiter) == 0 && Double.compare(fuelType.litresPerKmH, litresPerKmH) == 0 && Objects.equals(type, fuelType.type);
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) costPerLiter;
+    }
 
     /**
      * @return the number of litres per km/h of speed increase

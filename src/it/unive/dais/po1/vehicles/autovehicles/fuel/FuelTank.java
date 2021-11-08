@@ -15,6 +15,16 @@ public class FuelTank {
         return this.type;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof FuelTank) {
+            FuelTank o = (FuelTank) obj;
+            return this.amount==o.amount &&
+                    this.getFuelType().equals(o.getFuelType());
+        }
+        return false;
+    }
+
     public double getAmount() {
         return this.amount;
     }

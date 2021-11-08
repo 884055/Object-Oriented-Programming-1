@@ -2,6 +2,8 @@ package it.unive.dais.po1.vehicles.autovehicles;
 import it.unive.dais.po1.vehicles.Vehicle;
 import it.unive.dais.po1.vehicles.autovehicles.fuel.*;
 
+import java.util.Objects;
+
 /**
  * This class represents a car
  *
@@ -9,10 +11,33 @@ import it.unive.dais.po1.vehicles.autovehicles.fuel.*;
  * @author Pietro Ferrara
  */
 public class Car extends Vehicle {
+    @Override
+    public boolean equals(Object o) {
+        if(o != null && o instanceof Car) {
+            Car o1= (Car) o;
+            return o1.getSpeed() == this.getSpeed() &&
+                    o1.fuel == this.fuel &&
+                    this.fuelType.equals(o1.fuelType);
+        }
+        else return false;
+    }
+    @Override
+    public Car clone() {
+        Car c = new Car(this.getSpeed(), this.fuelType.clone());
+        c.fuel = this.fuel;
+        return c;
+    }
+
+    @Override
+    public int hashCode() {
+        //return (int) this.getSpeed();
+        //return (int) this.fuel;
+        return this.fuelType.hashCode();
+    }
 
     /*
-    @invariant fuel >= 0
-     */
+        @invariant fuel >= 0
+         */
     private double fuel = 0;
     private final FuelType fuelType;
 

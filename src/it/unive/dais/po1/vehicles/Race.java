@@ -8,6 +8,10 @@ import it.unive.dais.po1.vehicles.autovehicles.Truck;
 import it.unive.dais.po1.vehicles.autovehicles.fuel.FuelTank;
 import it.unive.dais.po1.vehicles.autovehicles.fuel.FuelType;
 
+import java.util.HashSet;
+import java.util.Set;
+
+
 public class Race<T extends Vehicle> {
 
     private final T v1, v2;
@@ -123,8 +127,25 @@ public class Race<T extends Vehicle> {
         AnimalCart myCart = new AnimalCart(0, 0);
 
 
+
         FuelTank two_lt = new FuelTank(diesel, 2);
+        FuelTank two_lt2 = new FuelTank(diesel, 2);
         FuelTank three_lt = new FuelTank(diesel, 3);
+
+        System.out.println(two_lt2.equals(two_lt));
+
+        Set<FuelTank> f = new HashSet<FuelTank>();
+        f.add(two_lt);
+        f.add(three_lt);
+        f.add(two_lt2);
+        f.remove(two_lt);
+        f.remove(two_lt);
+        System.out.println(f.size());
+
+        for(FuelTank f1 : f)
+            System.out.println(f1.getAmount());
+
+
         myTruck.refuel(three_lt);
         Vehicle v1 = myCar;
         Vehicle v2 = yourCar;
