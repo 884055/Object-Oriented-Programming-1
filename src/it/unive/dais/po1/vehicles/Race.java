@@ -10,6 +10,7 @@ import it.unive.dais.po1.vehicles.autovehicles.fuel.FuelType;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 
 public class Race<T extends Vehicle> {
@@ -116,6 +117,13 @@ public class Race<T extends Vehicle> {
 
 
     public static void main(String[] args) {
+
+        char[] value = {'a', 'b', 'c'};
+        String s = new String(value);
+
+        String s1 = "abc";
+
+
         FuelTypeCache cache = new FuelTypeCache();
 
         FuelType diesel = cache.put("diesel", 1.4, 0.01);
@@ -126,11 +134,32 @@ public class Race<T extends Vehicle> {
         Truck myTruck = new Truck(0, diesel);
         AnimalCart myCart = new AnimalCart(0, 0);
 
+        String a = "abc";
+        String a1 = new String("abc");//same of a
+
+        String b = a + "def"; //“abcdef“
+
+        String c = a.concat("def"); //“abcdef“
+
+        String d = c.replace('a', 'g'); //“gbcdef“
 
 
-        FuelTank two_lt = new FuelTank(diesel, 2);
+
+        String s2 = "The fuel type is " + diesel.getType();
+
+                FuelTank two_lt = new FuelTank(diesel, 2);
         FuelTank two_lt2 = new FuelTank(diesel, 2);
         FuelTank three_lt = new FuelTank(diesel, 3);
+
+        TreeSet<FuelTank> tanks = new TreeSet<>();
+        tanks.add(two_lt);
+        tanks.add(two_lt2);
+        tanks.add(three_lt);
+
+        TreeSet<Vehicle> vehicles = new TreeSet<>();
+        vehicles.add(myCar);
+        vehicles.add(myCart);
+        vehicles.add(myBicycle);
 
         System.out.println(two_lt2.equals(two_lt));
 
@@ -159,6 +188,5 @@ public class Race<T extends Vehicle> {
 
         fake_raceobj.race(v1, v2, 100.0);
 
-        Car b = new Race<>(myCar, yourCar).race(100);
     }
 }

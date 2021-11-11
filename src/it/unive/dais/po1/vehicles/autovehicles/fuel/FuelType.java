@@ -8,7 +8,7 @@ import java.util.Objects;
  * @since 1.0
  * @author Pietro Ferrara
  */
-public class FuelType {
+public class FuelType implements Comparable<FuelType> {
     private final String type;
 
     public double getFuelCost() {
@@ -91,4 +91,22 @@ public class FuelType {
         return tank.getFuelType().equals(this.type);
     }
 
+    @Override
+    public int compareTo(FuelType o) {
+        if(this.equals(o)) return 0;
+        else if(! this.type.equals(o.type))
+            return this.type.compareTo(o.type);
+        else if(this.litresPerKmH!=o.litresPerKmH)
+            return (int) (this.litresPerKmH-o.litresPerKmH);
+        else return (int) (this.costPerLiter-o.costPerLiter);
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    @Override
+    public String toString() {
+        return type+", cost " + costPerLiter + ", performance "+litresPerKmH;
+    }
 }

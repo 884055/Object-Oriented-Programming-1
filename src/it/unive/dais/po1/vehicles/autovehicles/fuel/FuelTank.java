@@ -5,7 +5,7 @@ package it.unive.dais.po1.vehicles.autovehicles.fuel;
  * @since 1.0
  * @author Pietro Ferrara
  */
-public class FuelTank {
+public class FuelTank implements Comparable<FuelTank> {
     private FuelType type;
     private double amount;
     private int id;
@@ -49,5 +49,15 @@ public class FuelTank {
     }
     static {
         FuelTank.resetTanksCount();
+    }
+
+    @Override
+    public int compareTo(FuelTank o) {
+        if(this.equals(o))
+            return 0;
+        else if(this.amount!=o.amount) {
+            return (int) (this.amount-o.amount);
+        }
+        else return this.type.compareTo(o.type);
     }
 }
