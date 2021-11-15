@@ -6,7 +6,7 @@ public class ExtendedRace extends Race {
         super(v1, v2);
     }
 
-    public static int race(Vehicle v1, Vehicle v2, double length) {
+    public static int race(Vehicle v1, Vehicle v2, double length) throws ImpossibleAccelerationException {
         System.out.println("Racing in the extended version of Race!!!");
         return Race.race(v1, v2, length);
     }

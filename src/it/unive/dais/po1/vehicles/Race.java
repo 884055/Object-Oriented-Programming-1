@@ -20,7 +20,7 @@ public class Race<T extends Vehicle> {
         this.v2 = v2;
     }
 
-    public T race(double length) {
+    public T race(double length) throws ImpossibleAccelerationException {
         v1.fullBrake();
         v2.fullBrake();
         double distanceV1 = 0, distanceV2=0;
@@ -44,7 +44,7 @@ public class Race<T extends Vehicle> {
      * @param length the length of the race
      * @return the id of the winner of the race, or -1
      */
-    public static int race(Vehicle v1,  Vehicle v2, double length) {
+    public static int race(Vehicle v1,  Vehicle v2, double length) throws ImpossibleAccelerationException {
         System.out.println("Race between two vehicles!");
         v1.fullBrake();
         v2.fullBrake();
@@ -97,7 +97,7 @@ public class Race<T extends Vehicle> {
     }
 
 
-    public static <T extends Vehicle> T new_race(T v1, T v2, double length) {
+    public static <T extends Vehicle> T new_race(T v1, T v2, double length) throws ImpossibleAccelerationException {
         v1.fullBrake();
         v2.fullBrake();
         double distanceV1 = 0, distanceV2=0;
@@ -114,8 +114,9 @@ public class Race<T extends Vehicle> {
     }
 
 
-    public static void main(String[] args) {
-        Car a = new Car(0, null);
+    public static void main(String[] args) throws ImpossibleAccelerationException {
+        Car a = new Car(0, new FuelType("diesel", 0.01));
         a.accelerate(10);
+
     }
 }

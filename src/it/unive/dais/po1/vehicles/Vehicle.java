@@ -1,5 +1,7 @@
 package it.unive.dais.po1.vehicles;
 
+import it.unive.dais.po1.vehicles.autovehicles.fuel.FuelNotSufficientException;
+
 public abstract class Vehicle {
 
     //@invariant speed >= 0
@@ -12,13 +14,17 @@ public abstract class Vehicle {
     /**
      * Accelerate the car of the given amount of km/h.
      *
+     * @throws InconsistentSpeedException when the current speed of the vehicle does not make any sense
+     * @throws NegativeSpeedException when the value passed as parameter is strictly than zero
      * @param a speed in km/h. Must be greater or equal than zero.
      *
-     * @requires amount >= 0
      */
-    public void accelerate(double a) {
-        if(a > 0)
+    public void accelerate(double a) throws ImpossibleAccelerationException {
+        if(this.speed < 0)
+            throw new InconsistentSpeedException();
+        if(a >= 0)
             this.speed += a;
+        else throw new NegativeSpeedException(a);
     }
     /**
      * Stops the vehicle

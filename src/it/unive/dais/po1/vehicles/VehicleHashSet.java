@@ -11,7 +11,7 @@ import java.util.HashSet;
 
 public class VehicleHashSet<T extends Vehicle> extends HashSet<T> {
 
-    public Vehicle race(double length) {
+    public Vehicle race(double length) throws ImpossibleAccelerationException {
         for(Vehicle v : this) {
             v.fullBrake();
         }
@@ -32,7 +32,7 @@ public class VehicleHashSet<T extends Vehicle> extends HashSet<T> {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ImpossibleAccelerationException {
         FuelTypeCache cache = new FuelTypeCache();
         VehicleHashSet<Vehicle> set = new VehicleHashSet<Vehicle>();
         FuelType diesel = cache.put("diesel", 1.4, 0.01);
