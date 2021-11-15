@@ -8,9 +8,7 @@ import it.unive.dais.po1.vehicles.autovehicles.Truck;
 import it.unive.dais.po1.vehicles.autovehicles.fuel.FuelTank;
 import it.unive.dais.po1.vehicles.autovehicles.fuel.FuelType;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 
 public class Race<T extends Vehicle> {
@@ -117,76 +115,7 @@ public class Race<T extends Vehicle> {
 
 
     public static void main(String[] args) {
-
-        char[] value = {'a', 'b', 'c'};
-        String s = new String(value);
-
-        String s1 = "abc";
-
-
-        FuelTypeCache cache = new FuelTypeCache();
-
-        FuelType diesel = cache.put("diesel", 1.4, 0.01);
-        FuelType petrol = cache.put("petrol", 1.5, 0.015);
-        Car yourCar = new Car(0, cache.getFuelTypeFromName("petrol"));
-        Car myCar = new Car(0, cache.getFuelTypeFromName("petrol"));
-        Bicycle myBicycle = new Bicycle(10);
-        Truck myTruck = new Truck(0, diesel);
-        AnimalCart myCart = new AnimalCart(0, 0);
-
-        String a = "abc";
-        String a1 = new String("abc");//same of a
-
-        String b = a + "def"; //“abcdef“
-
-        String c = a.concat("def"); //“abcdef“
-
-        String d = c.replace('a', 'g'); //“gbcdef“
-
-
-
-        String s2 = "The fuel type is " + diesel.getType();
-
-                FuelTank two_lt = new FuelTank(diesel, 2);
-        FuelTank two_lt2 = new FuelTank(diesel, 2);
-        FuelTank three_lt = new FuelTank(diesel, 3);
-
-        TreeSet<FuelTank> tanks = new TreeSet<>();
-        tanks.add(two_lt);
-        tanks.add(two_lt2);
-        tanks.add(three_lt);
-
-        TreeSet<Vehicle> vehicles = new TreeSet<>();
-        vehicles.add(myCar);
-        vehicles.add(myCart);
-        vehicles.add(myBicycle);
-
-        System.out.println(two_lt2.equals(two_lt));
-
-        Set<FuelTank> f = new HashSet<FuelTank>();
-        f.add(two_lt);
-        f.add(three_lt);
-        f.add(two_lt2);
-        f.remove(two_lt);
-        f.remove(two_lt);
-        System.out.println(f.size());
-
-        for(FuelTank f1 : f)
-            System.out.println(f1.getAmount());
-
-
-        myTruck.refuel(three_lt);
-        Vehicle v1 = myCar;
-        Vehicle v2 = yourCar;
-
-        Race recobj = new Race(v1, v2);
-        ExtendedRace extended_recobj = new ExtendedRace(v1, v2);
-        Race fake_raceobj = extended_recobj;
-
-        Car winner = Race.new_race(myCar, yourCar, 100);
-        Truck winner2 = Race.new_race(myTruck, myTruck, 100);
-
-        fake_raceobj.race(v1, v2, 100.0);
-
+        Car a = new Car(0, null);
+        a.accelerate(10);
     }
 }
