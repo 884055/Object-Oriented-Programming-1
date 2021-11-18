@@ -8,6 +8,9 @@ import it.unive.dais.po1.vehicles.autovehicles.Truck;
 import it.unive.dais.po1.vehicles.autovehicles.fuel.FuelTank;
 import it.unive.dais.po1.vehicles.autovehicles.fuel.FuelType;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 
 
@@ -97,26 +100,36 @@ public class Race<T extends Vehicle> {
     }
 
 
-    public static <T extends Vehicle> T new_race(T v1, T v2, double length) throws ImpossibleAccelerationException {
-        v1.fullBrake();
-        v2.fullBrake();
-        double distanceV1 = 0, distanceV2=0;
-        while(true) {
-            distanceV1 += v1.getSpeed();
-            distanceV2 += v2.getSpeed();
-            if(distanceV1 >= length || distanceV2 >= length) {
-                if(distanceV1 > distanceV2) return v1;
-                else return v2;
+    public static <T extends Vehicle> T new_race(T v1, T v2, double length) throws ImpossibleAccelerationException, IOException {
+        try {
+            v1.fullBrake();
+            v2.fullBrake();
+            double distanceV1 = 0, distanceV2=0;
+            while(! (distanceV1 >= length || distanceV2 >= length)) {
+                distanceV1 += v1.getSpeed();
+                distanceV2 += v2.getSpeed();
+                v1.accelerate(-Math.random()*10.0);
+                v2.accelerate(Math.random()*10.0);
             }
-            v1.accelerate(Math.random()*10.0);
-            v2.accelerate(Math.random()*10.0);
+            if(distanceV1 > distanceV2) return v1;
+            else return v2;
+        } catch (InconsistentSpeedException e) {
+            System.err.println("This is quite unexpected");
+            return null;
+            //throw new IllegalArgumentException("Random should never return a negative value");
+        } finally {
+            v1.fullBrake();
+            v2.fullBrake();
         }
     }
 
 
-    public static void main(String[] args) throws ImpossibleAccelerationException {
-        Car a = new Car(0, new FuelType("diesel", 0.01));
-        a.accelerate(10);
+    public static void main(String[] args) throws ImpossibleAccelerationException, IOException {
+        Bicycle  a = new Bicycle (0);
+        Bicycle  a1 = new Bicycle (0);
+        Race.new_race(a, a1, 10);
+
+
 
     }
 }
