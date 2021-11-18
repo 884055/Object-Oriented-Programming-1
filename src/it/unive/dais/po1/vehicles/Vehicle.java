@@ -20,6 +20,7 @@ public abstract class Vehicle {
      *
      */
     public void accelerate(double a) throws ImpossibleAccelerationException {
+        assert a>=0 : "The speed should not be negative";
         if(this.speed < 0)
             throw new InconsistentSpeedException();
         if(a >= 0)

@@ -100,27 +100,22 @@ public class Race<T extends Vehicle> {
     }
 
 
-    public static <T extends Vehicle> T new_race(T v1, T v2, double length) throws ImpossibleAccelerationException, IOException {
-        try {
+    public static <T extends Vehicle> T new_race(T v1, T v2, double length) {
             v1.fullBrake();
             v2.fullBrake();
             double distanceV1 = 0, distanceV2=0;
             while(! (distanceV1 >= length || distanceV2 >= length)) {
                 distanceV1 += v1.getSpeed();
                 distanceV2 += v2.getSpeed();
-                v1.accelerate(-Math.random()*10.0);
-                v2.accelerate(Math.random()*10.0);
+                try {
+                    v1.accelerate(-Math.random()*10.0);
+                    v2.accelerate(Math.random()*10.0);
+                } catch (ImpossibleAccelerationException e) {
+                    throw new IllegalArgumentException("Random returned a negative value", e);
+                }
             }
             if(distanceV1 > distanceV2) return v1;
             else return v2;
-        } catch (InconsistentSpeedException e) {
-            System.err.println("This is quite unexpected");
-            return null;
-            //throw new IllegalArgumentException("Random should never return a negative value");
-        } finally {
-            v1.fullBrake();
-            v2.fullBrake();
-        }
     }
 
 
