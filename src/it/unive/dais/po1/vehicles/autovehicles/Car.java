@@ -1,9 +1,11 @@
 package it.unive.dais.po1.vehicles.autovehicles;
+import it.unive.dais.po1.TestException;
 import it.unive.dais.po1.vehicles.ImpossibleAccelerationException;
 import it.unive.dais.po1.vehicles.InconsistentSpeedException;
 import it.unive.dais.po1.vehicles.NegativeSpeedException;
 import it.unive.dais.po1.vehicles.Vehicle;
 import it.unive.dais.po1.vehicles.autovehicles.fuel.*;
+import org.junit.jupiter.api.Test;
 
 import java.util.Objects;
 
@@ -74,9 +76,11 @@ public class Car extends Vehicle {
             tank.emptyTank();
     }
 
+    @Deprecated
     public void refuel(double amount) {
         fuel += amount;
     }
+
 
 
 

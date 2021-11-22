@@ -1,6 +1,7 @@
 package it.unive.dais.po1.vehicles;
 
 import it.unive.dais.po1.Printable;
+import it.unive.dais.po1.TestException;
 import it.unive.dais.po1.vehicles.animals.AnimalCart;
 import it.unive.dais.po1.vehicles.autovehicles.Car;
 import it.unive.dais.po1.vehicles.autovehicles.FuelTypeCache;
@@ -119,12 +120,7 @@ public class Race<T extends Vehicle> {
     }
 
 
-    public static void main(String[] args) throws ImpossibleAccelerationException, IOException {
-        Bicycle  a = new Bicycle (0);
-        Bicycle  a1 = new Bicycle (0);
-        Race.new_race(a, a1, 10);
-
-
+    public static void main(String[] args) throws ImpossibleAccelerationException, IOException, TestException {
 
     }
 }

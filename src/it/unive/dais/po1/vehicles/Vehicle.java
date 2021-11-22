@@ -5,9 +5,11 @@ import it.unive.dais.po1.vehicles.autovehicles.fuel.FuelNotSufficientException;
 public abstract class Vehicle {
 
     //@invariant speed >= 0
+    @Speed(forward = true)
     private double speed;
 
-    public Vehicle(double initialSpeed) {
+    public Vehicle(
+            @Speed(forward = true) double initialSpeed) {
         this.speed = initialSpeed;
     }
 
@@ -19,8 +21,8 @@ public abstract class Vehicle {
      * @param a speed in km/h. Must be greater or equal than zero.
      *
      */
-    public void accelerate(double a) throws ImpossibleAccelerationException {
-        assert a>=0 : "The speed should not be negative";
+    public void accelerate(@Speed(forward = true) double a) throws ImpossibleAccelerationException {
+        assert a>=0 : "The speed should be always positive ("+a+")";
         if(this.speed < 0)
             throw new InconsistentSpeedException();
         if(a >= 0)
@@ -46,7 +48,8 @@ public abstract class Vehicle {
      * @requires amount >= 0
      * @ensures getSpeed() >= 0
      */
-    public void brake(double amount) {
+    @SuppressWarnings("unused")
+    public void brake(@Speed(forward = false) double amount) {
         if(amount > speed)
             this.fullBrake();
         else speed = speed - amount;
@@ -59,6 +62,7 @@ public abstract class Vehicle {
      *
      * @ensures return >= 0
      */
+    @Speed(forward = true, type = "kph")
     final public double getSpeed() {
         return speed;
     }

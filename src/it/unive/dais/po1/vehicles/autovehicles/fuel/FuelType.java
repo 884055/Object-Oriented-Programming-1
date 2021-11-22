@@ -1,5 +1,15 @@
 package it.unive.dais.po1.vehicles.autovehicles.fuel;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Objects;
 
 /**
@@ -8,14 +18,25 @@ import java.util.Objects;
  * @since 1.0
  * @author Pietro Ferrara
  */
+@XmlRootElement
+@XmlType
 public class FuelType implements Comparable<FuelType> {
+
+    public FuelType() {
+        this("", 0.0);
+    }
+
+    @XmlElement
     private final String type;
 
     public double getFuelCost() {
         return costPerLiter;
     }
 
+    @XmlAttribute
     private double costPerLiter;
+
+    @XmlAttribute
     private final double litresPerKmH;
 
     @Override
@@ -109,4 +130,25 @@ public class FuelType implements Comparable<FuelType> {
     public String toString() {
         return type+", cost " + costPerLiter + ", performance "+litresPerKmH;
     }
+
+
+    public static void main(String[] args) throws JAXBException, IOException {
+        FuelType f = new FuelType("diesel", 0.015, 0.01);
+        marshal(f);
+        FuelType f2 = unmarshall();
+        System.out.println("ok");
+    }
+    static void marshal(FuelType fuelType)
+            throws JAXBException {
+        JAXBContext context = JAXBContext.newInstance(FuelType.class);
+        Marshaller mar= context.createMarshaller();
+        mar.marshal(fuelType, new File("./fuelType.xml"));
+    }
+    static FuelType unmarshall()
+            throws JAXBException, IOException {
+        JAXBContext context = JAXBContext.newInstance(FuelType.class);
+        return (FuelType) context.createUnmarshaller()
+                .unmarshal(new FileReader("./fuelType.xml"));
+    }
+
 }
