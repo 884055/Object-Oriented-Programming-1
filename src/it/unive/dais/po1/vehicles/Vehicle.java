@@ -2,7 +2,7 @@ package it.unive.dais.po1.vehicles;
 
 import it.unive.dais.po1.vehicles.autovehicles.fuel.FuelNotSufficientException;
 
-public abstract class Vehicle {
+public class Vehicle {
 
     //@invariant speed >= 0
     @Speed(forward = true)

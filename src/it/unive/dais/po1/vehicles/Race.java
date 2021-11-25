@@ -12,6 +12,10 @@ import it.unive.dais.po1.vehicles.autovehicles.fuel.FuelType;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.*;
 
 
@@ -120,7 +124,40 @@ public class Race<T extends Vehicle> {
     }
 
 
-    public static void main(String[] args) throws ImpossibleAccelerationException, IOException, TestException {
+    public static void main(String[] args) throws ImpossibleAccelerationException, IOException, TestException, NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException, InstantiationException {
+        Class v = Car.class;
+        /*System.out.println(v.getName());
+        for(Method m : v.getDeclaredMethods())
+            System.out.println(m);
+        for(Field f : v.getFields())
+            System.out.println(f);
+        for(Constructor c : v.getDeclaredConstructors())
+            System.out.println(c);*/
+
+        Class superclass =  v.getSuperclass();
+        for(Field f : superclass.getDeclaredFields())
+            System.out.println(f);
+        Field speedField = superclass.getDeclaredField("speed");
+        speedField.setAccessible(true);
+
+        Method accelerateMethod = superclass.getMethod("accelerate", double.class);
+
+
+
+        Car v1 = new Car(0.0, new FuelType("diesel", 0.015, 0.010));
+
+        v1.refuel(2.0);
+
+        double d = speedField.getDouble(v1);
+        System.out.println(d);
+
+        int i = accelerateMethod.getModifiers();
+        accelerateMethod.invoke(v1, 1.0);
+
+        Constructor<Vehicle> vehicleConstructor = superclass.getConstructor(double.class);
+        Vehicle v3 = vehicleConstructor.newInstance(10.0);
+
+        System.out.println(v3.getSpeed());
 
     }
 }

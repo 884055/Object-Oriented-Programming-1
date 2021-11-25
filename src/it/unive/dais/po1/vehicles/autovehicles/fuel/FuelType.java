@@ -33,7 +33,7 @@ public class FuelType implements Comparable<FuelType> {
         return costPerLiter;
     }
 
-    @XmlAttribute
+    @XmlElement
     private double costPerLiter;
 
     @XmlAttribute
