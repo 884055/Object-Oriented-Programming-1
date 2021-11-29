@@ -125,39 +125,46 @@ public class Race<T extends Vehicle> {
 
 
     public static void main(String[] args) throws ImpossibleAccelerationException, IOException, TestException, NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException, InstantiationException {
-        Class v = Car.class;
-        /*System.out.println(v.getName());
-        for(Method m : v.getDeclaredMethods())
-            System.out.println(m);
-        for(Field f : v.getFields())
-            System.out.println(f);
-        for(Constructor c : v.getDeclaredConstructors())
-            System.out.println(c);*/
-
-        Class superclass =  v.getSuperclass();
-        for(Field f : superclass.getDeclaredFields())
-            System.out.println(f);
-        Field speedField = superclass.getDeclaredField("speed");
-        speedField.setAccessible(true);
-
-        Method accelerateMethod = superclass.getMethod("accelerate", double.class);
-
-
-
-        Car v1 = new Car(0.0, new FuelType("diesel", 0.015, 0.010));
-
-        v1.refuel(2.0);
-
-        double d = speedField.getDouble(v1);
-        System.out.println(d);
-
-        int i = accelerateMethod.getModifiers();
-        accelerateMethod.invoke(v1, 1.0);
-
-        Constructor<Vehicle> vehicleConstructor = superclass.getConstructor(double.class);
-        Vehicle v3 = vehicleConstructor.newInstance(10.0);
-
-        System.out.println(v3.getSpeed());
-
+        Class classVehicle = Vehicle.class;
+        Field s = classVehicle.getDeclaredField("speed");
+        boolean annotated = s.isAnnotationPresent(Speed.class);
+        Speed speedAnnotation = (Speed) s.getAnnotation(Speed.class);
+        String type = speedAnnotation.type();
+        boolean forward = speedAnnotation.forward();
     }
+
+    static private void assignSpeed(Vehicle fromV, Vehicle toV) throws IllegalAccessException {
+    // get the speed from getSpeed of fromV
+    Field speedField = getSpeedField(fromV.getClass());
+    speedField.setAccessible(true);
+    Speed fromSpeedAnnotation = speedField.getDeclaredAnnotation(Speed.class);
+    String from = fromSpeedAnnotation.type();
+
+    Field speedFieldTo = getSpeedField(toV.getClass());
+    speedFieldTo.setAccessible(true);
+    Speed toSpeedAnnotation = speedFieldTo.getDeclaredAnnotation(Speed.class);
+    String to = toSpeedAnnotation.type();
+
+    speedFieldTo.setDouble(toV, convert(speedField.getDouble(fromV), from, to));
+    }
+
+    private static double convert(double aDouble, String from, String to) {
+        return 1.0;
+    }
+
+    private static Field getSpeedField(Class aClass) {
+        try {
+            Field f = aClass.getDeclaredField("speed");
+        } catch (NoSuchFieldException e) {
+            return getSpeedField(aClass.getSuperclass());
+        }
+    }
+
+    static private double getSpeed(Vehicle v) {
+        // get the speed from the field of v
+        // convert it in the format of getSpeed of the Vehicle
+        // return the value
+        return 0.0;
+    }
+
 }

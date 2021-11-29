@@ -133,8 +133,8 @@ public class FuelType implements Comparable<FuelType> {
 
 
     public static void main(String[] args) throws JAXBException, IOException {
-        FuelType f = new FuelType("diesel", 0.015, 0.01);
-        marshal(f);
+        //FuelType f = new FuelType("diesel", 0.015, 0.01);
+        //marshal(f);
         FuelType f2 = unmarshall();
         System.out.println("ok");
     }

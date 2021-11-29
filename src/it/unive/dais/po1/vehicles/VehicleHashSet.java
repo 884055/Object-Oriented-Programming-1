@@ -1,11 +1,16 @@
 package it.unive.dais.po1.vehicles;
 
 import it.unive.dais.po1.vehicles.animals.AnimalCart;
+import it.unive.dais.po1.vehicles.animals.HorseCart;
 import it.unive.dais.po1.vehicles.autovehicles.Car;
 import it.unive.dais.po1.vehicles.autovehicles.FuelTypeCache;
 import it.unive.dais.po1.vehicles.autovehicles.Truck;
 import it.unive.dais.po1.vehicles.autovehicles.fuel.FuelType;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Parameter;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -32,23 +37,66 @@ public class VehicleHashSet<T extends Vehicle> extends HashSet<T> {
         }
     }
 
-    public static void main(String[] args) throws ImpossibleAccelerationException {
-        FuelTypeCache cache = new FuelTypeCache();
-        VehicleHashSet<Vehicle> set = new VehicleHashSet<Vehicle>();
-        FuelType diesel = cache.put("diesel", 1.4, 0.01);
-        FuelType petrol = cache.put("petrol", 1.5, 0.015);
-        Car yourCar = new Car(0, cache.getFuelTypeFromName("petrol"));
-        Car myCar = new Car(0, cache.getFuelTypeFromName("petrol"));
-        Bicycle myBicycle = new Bicycle(10);
-        Truck myTruck = new Truck(0, diesel);
-        AnimalCart myCart = new AnimalCart(0, 0);
+    public static void main(String[] args) throws ImpossibleAccelerationException, InvocationTargetException, InstantiationException, IllegalAccessException {
+        Collection<Class> allVehicles = getAllVehiclesClasses();
+        for(Class c : allVehicles)
+            System.out.println(c.getName());
+        VehicleHashSet<Vehicle> allInstatiatedVehicles = new VehicleHashSet();
+        for(Class c : allVehicles) {
+            Vehicle v = createInstanceOf(c);
+            if(v!=null)
+                allInstatiatedVehicles.add(v);
+            else
+                System.err.println("Unable to instantiate vehicle "+c.getName());
+        }
+        for(Vehicle v : allInstatiatedVehicles)
+            System.out.println(v);
+        refuel(allInstatiatedVehicles);
+        System.out.println("The winner is "+allInstatiatedVehicles.race(100.0));
 
-        set.add(yourCar);
-        set.add(myCar);
-        set.add(myBicycle);
-        set.add(myTruck);
-        set.add(myCart);
-        Vehicle winner = set.race(100.0);
 
+    }
+
+    private static void refuel(VehicleHashSet<Vehicle> allInstatiatedVehicles) {
+        for(Vehicle v : allInstatiatedVehicles)
+            if(v instanceof Car)
+                ((Car) v).refuel(20.0);
+    }
+
+    private static Vehicle createInstanceOf(Class c) throws InvocationTargetException, InstantiationException, IllegalAccessException {
+        external: for(Constructor constructor : c.getConstructors()) {
+            constructor.setAccessible(true);
+            Parameter[] parameters = constructor.getParameters();
+            Object[] parametersValues = new Object[parameters.length];
+            for(int i = 0; i < parameters.length; i++) {
+                Object o = getConcreteValue(parameters[i].getType());
+                if(o!=null)
+                    parametersValues[i] = o;
+                else
+                    continue external;
+            }
+            //We have values for all parameters
+            return (Vehicle) constructor.newInstance(parametersValues);
+        }
+        return null;
+    }
+
+    static private Object getConcreteValue(Class<?> type) {
+        if(type.equals(FuelType.class))
+            return new FuelType("diesel", 0.015, 0.10);
+        if(type.equals(double.class) || type.equals(Double.class))
+            return Double.valueOf(0.0);
+        if(type.equals(int.class) || type.equals(Integer.class))
+            return Integer.valueOf(0);
+        return null;
+    }
+
+    static private Collection<Class> getAllVehiclesClasses() {
+        HashSet<Class> result = new HashSet<>();
+        result.add(Bicycle.class);
+        result.add(Car.class);
+        result.add(Truck.class);
+        result.add(HorseCart.class);
+        return result;
     }
 }

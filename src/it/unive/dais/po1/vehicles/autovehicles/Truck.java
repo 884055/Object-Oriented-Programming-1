@@ -5,6 +5,8 @@ import it.unive.dais.po1.vehicles.autovehicles.fuel.FuelType;
 
 import it.unive.dais.po1.Printable;
 
+import java.util.Objects;
+
 public class Truck extends Car implements LoadableUnloadable, Printable {
     private double loadedCharge;
 
@@ -29,6 +31,19 @@ public class Truck extends Car implements LoadableUnloadable, Printable {
             this.loadedCharge += l;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Truck truck = (Truck) o;
+        return Double.compare(truck.loadedCharge, loadedCharge) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), loadedCharge);
+    }
 
     public double unload() {
         double value = this.loadedCharge;
