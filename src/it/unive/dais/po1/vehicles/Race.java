@@ -154,7 +154,7 @@ public class Race<T extends Vehicle> {
 
     private static Field getSpeedField(Class aClass) {
         try {
-            Field f = aClass.getDeclaredField("speed");
+            return aClass.getDeclaredField("speed");
         } catch (NoSuchFieldException e) {
             return getSpeedField(aClass.getSuperclass());
         }
