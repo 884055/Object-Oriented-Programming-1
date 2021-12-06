@@ -2,12 +2,24 @@ plugins {
     id 'application'
 }
 
+
+sourceSets {
+    main {
+        java {
+            srcDirs 'src'
+        }
+    }
+}
+
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    testImplementation group:'junit', name:'junit', version:'4.13'
+    implementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+    implementation group: 'org.reflections', name: 'reflections', version: '0.10.2'
+
 }
 
-mainClassName = 'demo.App'
+mainClassName = 'it.unive.dais.po1.vehicles.VehicleHashSet'
+

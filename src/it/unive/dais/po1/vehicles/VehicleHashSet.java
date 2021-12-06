@@ -6,6 +6,7 @@ import it.unive.dais.po1.vehicles.autovehicles.Car;
 import it.unive.dais.po1.vehicles.autovehicles.FuelTypeCache;
 import it.unive.dais.po1.vehicles.autovehicles.Truck;
 import it.unive.dais.po1.vehicles.autovehicles.fuel.FuelType;
+import org.reflections.Reflections;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -13,6 +14,7 @@ import java.lang.reflect.Parameter;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Set;
 
 public class VehicleHashSet<T extends Vehicle> extends HashSet<T> {
 
@@ -93,10 +95,10 @@ public class VehicleHashSet<T extends Vehicle> extends HashSet<T> {
 
     static private Collection<Class> getAllVehiclesClasses() {
         HashSet<Class> result = new HashSet<>();
-        result.add(Bicycle.class);
-        result.add(Car.class);
-        result.add(Truck.class);
-        result.add(HorseCart.class);
+        Reflections reflections = new Reflections("it.unive.dais.po1.vehicles");
+        Set<Class<? extends Vehicle>> allClasses =
+                reflections.getSubTypesOf(Vehicle.class);
+        result.addAll(allClasses);
         return result;
     }
 }

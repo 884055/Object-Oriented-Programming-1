@@ -131,6 +131,7 @@ public class Race<T extends Vehicle> {
         Speed speedAnnotation = (Speed) s.getAnnotation(Speed.class);
         String type = speedAnnotation.type();
         boolean forward = speedAnnotation.forward();
+        System.out.println("OK");
     }
 
     static private void assignSpeed(Vehicle fromV, Vehicle toV) throws IllegalAccessException {
